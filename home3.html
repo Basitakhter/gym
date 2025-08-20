@@ -30,8 +30,6 @@
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         .container {
@@ -181,7 +179,6 @@
         .page {
             display: none;
             padding: 40px 0;
-            flex: 1;
             animation: fadeIn 0.5s ease;
         }
 
@@ -302,15 +299,11 @@
         }
 
         /* Exercise Categories */
-        .exercise-categories {
-            padding: 80px 0;
-            background: linear-gradient(to bottom, #f5f7fa, #e4e7ec);
-        }
-
-        .categories-grid {
+        .categories {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
+            margin-bottom: 40px;
         }
 
         .category-card {
@@ -361,10 +354,6 @@
         .category-content h3 {
             margin-bottom: 10px;
             color: var(--dark);
-        }
-
-        .category-content p {
-            color: var(--gray);
         }
 
         /* Exercise List */
@@ -518,6 +507,7 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             margin: 40px auto;
             max-width: 600px;
+            display: none;
         }
 
         .calculator-form h3 {
@@ -881,10 +871,41 @@
             font-weight: bold;
         }
 
+        /* Progress Tracking */
+        .progress-tracking {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .progress-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .progress-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .progress-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
         /* Testimonials Section */
         .testimonials {
             padding: 80px 0;
-            background: white;
+            background: linear-gradient(to bottom, #f5f7fa, #e4e7ec);
         }
 
         .testimonials-grid {
@@ -894,7 +915,7 @@
         }
 
         .testimonial-card {
-            background: var(--light);
+            background: white;
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -958,7 +979,6 @@
             background: var(--dark);
             color: white;
             padding: 60px 0 20px;
-            margin-top: auto;
         }
 
         .footer-content {
@@ -1072,6 +1092,8 @@
                         <li><a onclick="showPage('workouts')"><i class="fas fa-running"></i> Workouts</a></li>
                         <li><a onclick="showPage('exercises')"><i class="fas fa-dumbbell"></i> Exercises</a></li>
                         <li><a onclick="showPage('nutrition')"><i class="fas fa-utensils"></i> Nutrition</a></li>
+                        <li><a onclick="showPage('progress')"><i class="fas fa-chart-line"></i> Progress</a></li>
+                        <li><a onclick="showPage('community')"><i class="fas fa-users"></i> Community</a></li>
                         <li><a onclick="showPage('camera')"><i class="fas fa-camera"></i> Form Check</a></li>
                     </ul>
                 </nav>
@@ -1093,76 +1115,113 @@
             </div>
         </div>
 
-        <div class="container">
-            <div class="page-title">
-                <h2>Featured Workouts</h2>
-                <p>Discover our most popular workout programs</p>
-            </div>
-
-            <div class="exercise-list">
-                <div class="exercise-card">
-                    <div class="exercise-img">
-                        <i class="fas fa-fire"></i>
-                    </div>
-                    <div class="exercise-content">
-                        <h3>Chest Day - Beginner</h3>
-                        <p>Complete chest workout for beginners focusing on form and technique</p>
-                        <div class="exercise-meta">
-                            <span><i class="fas fa-clock"></i> 45 min</span>
-                            <span><i class="fas fa-dumbbell"></i> 8 exercises</span>
-                        </div>
-                    </div>
+        <div class="features">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Why Choose FitPro?</h2>
+                    <p>Discover the features that make our fitness app stand out from the rest</p>
                 </div>
-                <div class="exercise-card">
-                    <div class="exercise-img">
-                        <i class="fas fa-bolt"></i>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3>Personalized Workouts</h3>
+                        <p>Custom workout plans tailored to your goals, fitness level, and available equipment.</p>
                     </div>
-                    <div class="exercise-content">
-                        <h3>Leg Day - Advanced</h3>
-                        <p>Intensive leg workout for advanced lifters focusing on strength and hypertrophy</p>
-                        <div class="exercise-meta">
-                            <span><i class="fas fa-clock"></i> 60 min</span>
-                            <span><i class="fas fa-dumbbell"></i> 10 exercises</span>
-                        </div>
+                    <div class="feature-card">
+                        <i class="fas fa-utensils"></i>
+                        <h3>Nutrition Plans</h3>
+                        <p>Meal plans and calorie tracking designed to support your fitness journey.</p>
                     </div>
-                </div>
-                <div class="exercise-card">
-                    <div class="exercise-img">
-                        <i class="fas fa-heart"></i>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Progress Tracking</h3>
+                        <p>Monitor your progress with detailed analytics and visual representations.</p>
                     </div>
-                    <div class="exercise-content">
-                        <h3>Full Body HIIT</h3>
-                        <p>High-intensity interval training for fat loss and cardiovascular health</p>
-                        <div class="exercise-meta">
-                            <span><i class="fas fa-clock"></i> 30 min</span>
-                            <span><i class="fas fa-dumbbell"></i> 12 exercises</span>
-                        </div>
+                    <div class="feature-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Community Support</h3>
+                        <p>Connect with other fitness enthusiasts and share your journey.</p>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="calculator">
-                <h2>Fitness Calculators</h2>
-                <div class="calculator-grid">
-                    <div class="calc-card">
-                        <i class="fas fa-weight"></i>
-                        <h3>BMI Calculator</h3>
-                        <p>Calculate your Body Mass Index to understand your weight category</p>
-                        <button class="btn btn-primary" onclick="showPage('fitness-plans')">Calculate BMI</button>
+        <div class="calculator">
+            <h2>Fitness Calculators</h2>
+            <div class="calculator-grid">
+                <div class="calc-card">
+                    <i class="fas fa-weight"></i>
+                    <h3>BMI Calculator</h3>
+                    <p>Calculate your Body Mass Index to understand your weight category</p>
+                    <button class="btn btn-primary" onclick="showPage('fitness-plans')">Calculate BMI</button>
+                </div>
+                <div class="calc-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>BMR Calculator</h3>
+                    <p>Calculate your Basal Metabolic Rate to optimize your nutrition</p>
+                    <button class="btn btn-primary" onclick="showPage('fitness-plans')">Calculate BMR</button>
+                </div>
+                <div class="calc-card">
+                    <i class="fas fa-burn"></i>
+                    <h3>Calorie Calculator</h3>
+                    <p>Determine your daily calorie needs based on your goals</p>
+                    <button class="btn btn-primary" onclick="showPage('fitness-plans')">Calculate Calories</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonials">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Success Stories</h2>
+                    <p>See what our users have achieved with FitPro</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "I've lost 25 pounds in 3 months using FitPro! The personalized workouts and nutrition plan made all the difference."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">SJ</div>
+                            <div class="author-info">
+                                <h4>Sarah Johnson</h4>
+                                <p>Lost 25 lbs</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="calc-card">
-                        <i class="fas fa-heart"></i>
-                        <h3>BMR Calculator</h3>
-                        <p>Calculate your Basal Metabolic Rate to optimize your nutrition</p>
-                        <button class="btn btn-primary" onclick="showPage('fitness-plans')">Calculate BMR</button>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "The progress tracking features kept me motivated. I've gained 15 pounds of muscle in 4 months!"
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">MT</div>
+                            <div class="author-info">
+                                <h4>Mike Thompson</h4>
+                                <p>Gained 15 lbs muscle</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="calc-card">
-                        <i class="fas fa-burn"></i>
-                        <h3>Calorie Calculator</h3>
-                        <p>Determine your daily calorie needs based on your goals</p>
-                        <button class="btn btn-primary" onclick="showPage('fitness-plans')">Calculate Calories</button>
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            "As a beginner, I was overwhelmed until I found FitPro. The guided workouts and community support made my journey enjoyable."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">JL</div>
+                            <div class="author-info">
+                                <h4>Jessica Lee</h4>
+                                <p>Fitness Beginner</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="cta">
+            <div class="container">
+                <h2>Start Your Fitness Journey Today</h2>
+                <p>Join thousands of users who have transformed their lives with FitPro</p>
+                <button class="btn btn-primary">Get Started Now</button>
             </div>
         </div>
     </div>
@@ -1323,7 +1382,7 @@
                 <p>Choose from our expertly designed workout plans based on your goals and experience level</p>
             </div>
 
-            <div class="categories-grid">
+            <div class="categories">
                 <div class="category-card">
                     <div class="category-img">
                         <i class="fas fa-weight"></i>
@@ -1402,4 +1461,855 @@
                         <p>6-day per week muscle group split for advanced hypertrophy training</p>
                         <div class="exercise-meta">
                             <span><i class="fas fa-calendar"></i> 6 days/week</span>
-                            <span><i class="fas fa-clock"></i
+                            <span><i class="fas fa-clock"></i> 16 weeks</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercises Page -->
+    <div id="exercises" class="page">
+        <div class="container">
+            <div class="page-title">
+                <h1>Exercise Library</h1>
+                <p>Browse our complete exercise database with instructions, videos, and form tips</p>
+            </div>
+
+            <div class="categories">
+                <div class="category-card" onclick="showCategory('chest')">
+                    <div class="category-img">
+                        <i class="fas fa-hands"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Chest Exercises</h3>
+                        <p>25 exercises</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="showCategory('legs')">
+                    <div class="category-img">
+                        <i class="fas fa-walking"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Leg Exercises</h3>
+                        <p>32 exercises</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="showCategory('back')">
+                    <div class="category-img">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Back Exercises</h3>
+                        <p>28 exercises</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="showCategory('shoulders')">
+                    <div class="category-img">
+                        <i class="fas fa-hand-rock"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Shoulder Exercises</h3>
+                        <p>22 exercises</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="showCategory('biceps')">
+                    <div class="category-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Bicep Exercises</h3>
+                        <p>18 exercises</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="showCategory('triceps')">
+                    <div class="category-img">
+                        <i class="fas fa-hand-point-up"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Tricep Exercises</h3>
+                        <p>16 exercises</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="showCategory('core')">
+                    <div class="category-img">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Core Exercises</h3>
+                        <p>24 exercises</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="showCategory('cardio')">
+                    <div class="category-img">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Cardio Exercises</h3>
+                        <p>20 exercises</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-title">
+                <h2>Popular Exercises</h2>
+            </div>
+
+            <div class="exercise-list">
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Bench Press</h3>
+                        <p>Compound chest exercise targeting pectorals, shoulders, and triceps</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-dumbbell"></i> Chest</span>
+                            <span><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Barbell Squat</h3>
+                        <p>Compound lower body exercise targeting quads, glutes, and hamstrings</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-dumbbell"></i> Legs</span>
+                            <span><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Deadlift</h3>
+                        <p>Compound full body exercise targeting posterior chain and grip strength</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-dumbbell"></i> Back</span>
+                            <span><i class="fas fa-signal"></i> Advanced</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Overhead Press</h3>
+                        <p>Compound shoulder exercise targeting deltoids, triceps, and upper chest</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-dumbbell"></i> Shoulders</span>
+                            <span><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Pull-Ups</h3>
+                        <p>Bodyweight exercise targeting back, biceps, and core muscles</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-dumbbell"></i> Back</span>
+                            <span><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Plank</h3>
+                        <p>Isometric core exercise targeting abdominal muscles and improving stability</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-dumbbell"></i> Core</span>
+                            <span><i class="fas fa-signal"></i> Beginner</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nutrition Page -->
+    <div id="nutrition" class="page">
+        <div class="container">
+            <div class="page-title">
+                <h1>Nutrition Plans</h1>
+                <p>Fuel your body with our science-based nutrition plans tailored to your goals</p>
+            </div>
+
+            <div class="categories">
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Weight Loss</h3>
+                        <p>Calorie deficit plans</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Muscle Gain</h3>
+                        <p>Calorie surplus plans</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Maintenance</h3>
+                        <p>Balanced nutrition plans</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Vegetarian</h3>
+                        <p>Plant-based nutrition</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-title">
+                <h2>Sample Meal Plans</h2>
+            </div>
+
+            <div class="exercise-list">
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Weight Loss - 1800 Calories</h3>
+                        <p>Balanced meal plan with moderate protein and controlled carbohydrates for sustainable weight loss</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-utensils"></i> 4 meals</span>
+                            <span><i class="fas fa-apple-alt"></i> High protein</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Muscle Gain - 3000 Calories</h3>
+                        <p>High-calorie meal plan with emphasis on protein and complex carbohydrates for muscle growth</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-utensils"></i> 5 meals</span>
+                            <span><i class="fas fa-apple-alt"></i> High calorie</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Maintenance - 2200 Calories</h3>
+                        <p>Well-rounded meal plan with balanced macronutrients for maintaining weight and health</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-utensils"></i> 4 meals</span>
+                            <span><i class="fas fa-apple-alt"></i> Balanced</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="diet-plans">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Diet Plans</h2>
+                        <p>Nutrition plans tailored to your fitness goals and dietary preferences</p>
+                    </div>
+                    <div class="diet-container">
+                        <div class="diet-card">
+                            <div class="diet-img">
+                                <i class="fas fa-weight"></i>
+                            </div>
+                            <div class="diet-content">
+                                <h3>Weight Loss Diet</h3>
+                                <p>Calorie-controlled meals with balanced nutrition to help you lose weight sustainably.</p>
+                                <div class="day-plan">
+                                    <h4><i class="fas fa-utensils"></i>Sample Day</h4>
+                                    <p><strong>Breakfast:</strong> Greek yogurt with berries</p>
+                                    <p><strong>Lunch:</strong> Grilled chicken salad</p>
+                                    <p><strong>Dinner:</strong> Baked salmon with vegetables</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="diet-card">
+                            <div class="diet-img">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <div class="diet-content">
+                                <h3>Muscle Gain Diet</h3>
+                                <p>High-protein meal plan to support muscle growth and recovery.</p>
+                                <div class="day-plan">
+                                    <h4><i class="fas fa-utensils"></i>Sample Day</h4>
+                                    <p><strong>Breakfast:</strong> Protein oatmeal with nuts</p>
+                                    <p><strong>Lunch:</strong> Lean beef with sweet potato</p>
+                                    <p><strong>Dinner:</strong> Tuna steak with quinoa</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="diet-card">
+                            <div class="diet-img">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="diet-content">
+                                <h3>Maintenance Diet</h3>
+                                <p>Balanced nutrition plan to maintain your weight and overall health.</p>
+                                <div class="day-plan">
+                                    <h4><i class="fas fa-utensils"></i>Sample Day</h4>
+                                    <p><strong>Breakfast:</strong> Whole grain toast with avocado</p>
+                                    <p><strong>Lunch:</strong> Chicken wrap with veggies</p>
+                                    <p><strong>Dinner:</strong> Stir-fried tofu with brown rice</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Page -->
+    <div id="progress" class="page">
+        <div class="container">
+            <div class="page-title">
+                <h1>Progress Tracking</h1>
+                <p>Monitor your fitness journey with detailed analytics and visual progress reports</p>
+            </div>
+
+            <div class="progress-tracking">
+                <div class="progress-grid">
+                    <div class="progress-card">
+                        <i class="fas fa-weight"></i>
+                        <h3>Weight Tracking</h3>
+                        <p>Track your weight changes over time with interactive charts</p>
+                        <button class="btn btn-primary">Track Weight</button>
+                    </div>
+                    <div class="progress-card">
+                        <i class="fas fa-ruler"></i>
+                        <h3>Body Measurements</h3>
+                        <p>Record and monitor changes in your body measurements</p>
+                        <button class="btn btn-primary">Track Measurements</button>
+                    </div>
+                    <div class="progress-card">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3>Strength Progress</h3>
+                        <p>Monitor your strength gains on key exercises over time</p>
+                        <button class="btn btn-primary">Track Strength</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-title">
+                <h2>Progress Photos</h2>
+                <p>Visual documentation of your transformation journey</p>
+            </div>
+
+            <div class="categories">
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Front View</h3>
+                        <p>Track progress from the front</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Side View</h3>
+                        <p>Track progress from the side</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Back View</h3>
+                        <p>Track progress from the back</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Community Page -->
+    <div id="community" class="page">
+        <div class="container">
+            <div class="page-title">
+                <h1>Community & Challenges</h1>
+                <p>Connect with other fitness enthusiasts and participate in challenges</p>
+            </div>
+
+            <div class="competitions">
+                <div class="competition-container">
+                    <div class="competition-card">
+                        <div class="competition-header">
+                            <h3>30-Day Step Challenge</h3>
+                            <p>April 1 - April 30</p>
+                        </div>
+                        <div class="competition-body">
+                            <h3>Walk to Win!</h3>
+                            <p>Reach 10,000 steps daily to complete the challenge and earn rewards.</p>
+                            <div class="progress-container">
+                                <div class="progress-info">
+                                    <span>Progress</span>
+                                    <span>65%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%;"></div>
+                                </div>
+                            </div>
+                            <div class="participants">
+                                <div class="participant">1</div>
+                                <div class="participant">2</div>
+                                <div class="participant">3</div>
+                                <div class="participant">+25</div>
+                            </div>
+                            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Join Challenge</button>
+                        </div>
+                    </div>
+                    <div class="competition-card">
+                        <div class="competition-header">
+                            <h3>Summer Body Transformation</h3>
+                            <p>May 1 - July 31</p>
+                        </div>
+                        <div class="competition-body">
+                            <h3>Get Beach Ready!</h3>
+                            <p>12-week transformation challenge with weekly workouts and diet plans.</p>
+                            <div class="progress-container">
+                                <div class="progress-info">
+                                    <span>Progress</span>
+                                    <span>28%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 28%;"></div>
+                                </div>
+                            </div>
+                            <div class="participants">
+                                <div class="participant">1</div>
+                                <div class="participant">2</div>
+                                <div class="participant">3</div>
+                                <div class="participant">+42</div>
+                            </div>
+                            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Join Challenge</button>
+                        </div>
+                    </div>
+                    <div class="competition-card">
+                        <div class="competition-header">
+                            <h3>Plank Master Challenge</h3>
+                        </div>
+                        <div class="competition-body">
+                            <h3>Build Core Strength!</h3>
+                            <p>Compete to see who can hold a plank the longest. Weekly leaderboards.</p>
+                            <div class="progress-container">
+                                <div class="progress-info">
+                                    <span>Progress</span>
+                                    <span>82%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 82%;"></div>
+                                </div>
+                            </div>
+                            <div class="participants">
+                                <div class="participant">1</div>
+                                <div class="participant">2</div>
+                                <div class="participant">3</div>
+                                <div class="participant">+38</div>
+                            </div>
+                            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Join Challenge</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-title">
+                <h2>Community Feed</h2>
+                <p>See what other FitPro users are achieving</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "I've lost 25 pounds in 3 months using FitPro! The personalized workouts and nutrition plan made all the difference."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SJ</div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Lost 25 lbs</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "The progress tracking features kept me motivated. I've gained 15 pounds of muscle in 4 months!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MT</div>
+                        <div class="author-info">
+                            <h4>Mike Thompson</h4>
+                            <p>Gained 15 lbs muscle</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "As a beginner, I was overwhelmed until I found FitPro. The guided workouts and community support made my journey enjoyable."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JL</div>
+                        <div class="author-info">
+                            <h4>Jessica Lee</h4>
+                            <p>Fitness Beginner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera/Form Check Page -->
+    <div id="camera" class="page">
+        <div class="container">
+            <div class="page-title">
+                <h1>Form Check</h1>
+                <p>Use your camera to check your exercise form and get real-time feedback</p>
+            </div>
+
+            <div class="camera-section">
+                <div class="camera-container">
+                    <div class="camera-preview">
+                        <i class="fas fa-camera"></i>
+                        <div class="angle-indicator">Angle: 0°</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exercise-select">Select Exercise</label>
+                        <select id="exercise-select" class="form-control">
+                            <option value="squat">Barbell Squat</option>
+                            <option value="bench">Bench Press</option>
+                            <option value="deadlift">Deadlift</option>
+                            <option value="shoulder">Shoulder Press</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-gradient" style="margin-top: 20px;">
+                        <i class="fas fa-video"></i> Start Camera
+                    </button>
+                </div>
+            </div>
+
+            <div class="page-title">
+                <h2>Form Tips</h2>
+            </div>
+
+            <div class="exercise-list">
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Barbell Squat</h3>
+                        <p>Keep your chest up, back straight, and knees tracking over toes. Descend until thighs are parallel to the floor.</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-exclamation-circle"></i> Common mistake: Knee cave</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Bench Press</h3>
+                        <p>Maintain a slight arch in your back, keep shoulders retracted, and lower bar to mid-chest.</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-exclamation-circle"></i> Common mistake: Flaring elbows</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Deadlift</h3>
+                        <p>Keep your back straight, chest up, and drive through your heels. Maintain the bar close to your body.</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-exclamation-circle"></i> Common mistake: Rounded back</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FitPro</h3>
+                    <p>Your all-in-one fitness solution for workout plans, nutrition guidance, and progress tracking.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a onclick="showPage('home')">Home</a></li>
+                        <li><a onclick="showPage('fitness-plans')">Fitness Plans</a></li>
+                        <li><a onclick="showPage('workouts')">Workouts</a></li>
+                        <li><a onclick="showPage('exercises')">Exercises</a></li>
+                        <li><a onclick="showPage('nutrition')">Nutrition</a></li>
+                        <li><a onclick="showPage('progress')">Progress</a></li>
+                        <li><a onclick="showPage('community')">Community</a></li>
+                        <li><a onclick="showPage('camera')">Form Check</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@fitpro.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fitness St, Health City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 FitPro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Login/Signup Buttons
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            alert('Login functionality would be implemented here with backend integration');
+        });
+
+        document.getElementById('signupBtn').addEventListener('click', () => {
+            alert('Signup functionality would be implemented here with backend integration');
+        });
+
+        // Calculator functionality
+        const bmiCalcBtn = document.getElementById('bmiCalcBtn');
+        const bmrCalcBtn = document.getElementById('bmrCalcBtn');
+        const calorieCalcBtn = document.getElementById('calorieCalcBtn');
+        const bmiCalculator = document.getElementById('bmiCalculator');
+        const bmrCalculator = document.getElementById('bmrCalculator');
+        const calorieCalculator = document.getElementById('calorieCalculator');
+        const calculateBmi = document.getElementById('calculateBmi');
+        const calculateBmr = document.getElementById('calculateBmr');
+        const calculateCalories = document.getElementById('calculateCalories');
+        const bmiResult = document.getElementById('bmiResult');
+        const bmrResult = document.getElementById('bmrResult');
+        const calorieResult = document.getElementById('calorieResult');
+        const maleOption = document.getElementById('maleOption');
+        const femaleOption = document.getElementById('femaleOption');
+        
+        let selectedGender = 'male';
+        let bmrValue = 0;
+
+        // Show BMI Calculator
+        if (bmiCalcBtn) {
+            bmiCalcBtn.addEventListener('click', () => {
+                bmiCalculator.style.display = 'block';
+                bmrCalculator.style.display = 'none';
+                calorieCalculator.style.display = 'none';
+            });
+        }
+
+        // Show BMR Calculator
+        if (bmrCalcBtn) {
+            bmrCalcBtn.addEventListener('click', () => {
+                bmrCalculator.style.display = 'block';
+                bmiCalculator.style.display = 'none';
+                calorieCalculator.style.display = 'none';
+            });
+        }
+
+        // Show Calorie Calculator
+        if (calorieCalcBtn) {
+            calorieCalcBtn.addEventListener('click', () => {
+                if (bmrValue === 0) {
+                    alert('Please calculate your BMR first for accurate calorie estimation');
+                    if (bmrCalcBtn) bmrCalcBtn.click();
+                    return;
+                }
+                calorieCalculator.style.display = 'block';
+                bmiCalculator.style.display = 'none';
+                bmrCalculator.style.display = 'none';
+            });
+        }
+
+        // Gender Selection
+        if (maleOption && femaleOption) {
+            maleOption.addEventListener('click', () => {
+                selectedGender = 'male';
+                maleOption.classList.add('selected');
+                femaleOption.classList.remove('selected');
+            });
+
+            femaleOption.addEventListener('click', () => {
+                selectedGender = 'female';
+                femaleOption.classList.add('selected');
+                maleOption.classList.remove('selected');
+            });
+
+            // Initialize gender selection
+            maleOption.classList.add('selected');
+        }
+
+        // Calculate BMI
+        if (calculateBmi) {
+            calculateBmi.addEventListener('click', () => {
+                const height = parseFloat(document.getElementById('height').value) / 100; // convert cm to m
+                const weight = parseFloat(document.getElementById('weight').value);
+                
+                if (height && weight) {
+                    const bmi = weight / (height * height);
+                    let category = '';
+                    
+                    if (bmi < 18.5) {
+                        category = 'Underweight';
+                        bmiResult.style.background = 'linear-gradient(to right, #ff7e5f, #feb47b)';
+                    } else if (bmi < 25) {
+                        category = 'Normal weight';
+                        bmiResult.style.background = 'linear-gradient(to right, #00c9ff, #92fe9d)';
+                    } else if (bmi < 30) {
+                        category = 'Overweight';
+                        bmiResult.style.background = 'linear-gradient(to right, #ff7e5f, #feb47b)';
+                    } else {
+                        category = 'Obesity';
+                        bmiResult.style.background = 'linear-gradient(to right, #ff6b6b, #ff5252)';
+                    }
+                    
+                    bmiResult.innerHTML = `Your BMI: ${bmi.toFixed(1)} (${category})`;
+                    bmiResult.style.display = 'block';
+                } else {
+                    alert('Please enter both height and weight.');
+                }
+            });
+        }
+
+        // Calculate BMR
+        if (calculateBmr) {
+            calculateBmr.addEventListener('click', () => {
+                const age = parseFloat(document.getElementById('age').value);
+                const height = parseFloat(document.getElementById('bmrHeight').value);
+                const weight = parseFloat(document.getElementById('bmrWeight').value);
+                
+                if (age && height && weight) {
+                    // Mifflin-St Jeor Equation
+                    if (selectedGender === 'male') {
+                        bmrValue = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+                    } else {
+                        bmrValue = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+                    }
+                    
+                    bmrResult.innerHTML = `Your BMR: ${bmrValue.toFixed(0)} calories/day`;
+                    bmrResult.style.background = 'linear-gradient(to right, #6a11cb, #2575fc)';
+                    bmrResult.style.display = 'block';
+                } else {
+                    alert('Please enter all required fields.');
+                }
+            });
+        }
+
+        // Calculate Calories
+        if (calculateCalories) {
+            calculateCalories.addEventListener('click', () => {
+                const activityLevel = parseFloat(document.getElementById('activityLevel').value);
+                
+                if (bmrValue > 0) {
+                    const maintenanceCalories = bmrValue * activityLevel;
+                    
+                    calorieResult.innerHTML = `
+                        Daily Calorie Needs:<br>
+                        Maintenance: ${maintenanceCalories.toFixed(0)} calories<br>
+                        Mild weight loss: ${(maintenanceCalories - 250).toFixed(0)} calories<br>
+                        Weight loss: ${(maintenanceCalories - 500).toFixed(0)} calories<br>
+                        Weight gain: ${(maintenanceCalories + 500).toFixed(0)} calories
+                    `;
+                    calorieResult.style.background = 'linear-gradient(to right, #6a11cb, #2575fc)';
+                    calorieResult.style.display = 'block';
+                } else {
+                    alert('Please calculate your BMR first.');
+                }
+            });
+        }
+
+        // Show exercise category
+        function showCategory(category) {
+            alert(`Showing ${category} exercises. This would filter the exercise library.`);
+        }
+
+        // Simple animation on scroll
+        window.addEventListener('scroll', () => {
+            const elements = document.querySelectorAll('.category-card, .exercise-card, .plan-card, .diet-card, .competition-card, .feature-card');
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = 1;
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Initialize element styles for animation
+        document.querySelectorAll('.category-card, .exercise-card, .plan-card, .diet-card, .competition-card, .feature-card').forEach(element => {
+            element.style.opacity = 0;
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+
+        // Trigger scroll once to check initial position
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+    </html>
+
