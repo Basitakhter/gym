@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPro - Ultimate Fitness Solution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff6b6b;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gray: #7f8c8d;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #f5f7fa, #e4e7ec);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 26px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.5);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 10px rgba(106, 17, 203, 0.4);
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.5);
+        }
+
+        /* Page Styles */
+        .page {
+            display: none;
+            padding: 40px 0;
+            flex: 1;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .page-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Exercise Categories */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .category-img {
+            height: 180px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-img i {
+            font-size: 4rem;
+            color: white;
+            z-index: 1;
+        }
+
+        .category-img:after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+        }
+
+        .category-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .category-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        /* Exercise List */
+        .exercise-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .exercise-img {
+            height: 200px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exercise-img i {
+            font-size: 4rem;
+            color: white;
+            z-index: 1;
+        }
+
+        .exercise-content {
+            padding: 20px;
+        }
+
+        .exercise-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .exercise-content p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .exercise-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .exercise-meta span {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+        }
+
+        .exercise-meta i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+
+        /* Camera Section */
+        .camera-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+
+        .camera-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .camera-preview {
+            width: 100%;
+            max-width: 500px;
+            height: 350px;
+            background: var(--light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .camera-preview i {
+            font-size: 4rem;
+            color: var(--gray);
+        }
+
+        .angle-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+            color: #aaa;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin: 20px 0;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: 10px 15px;
+            }
+
+            .auth-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .page-title h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="showPage('home')">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>FitPro</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a onclick="showPage('home')">Home</a></li>
+                        <li><a onclick="showPage('workouts')">Workouts</a></li>
+                        <li><a onclick="showPage('exercises')">Exercises</a></li>
+                        <li><a onclick="showPage('nutrition')">Nutrition</a></li>
+                        <li><a onclick="showPage('camera')">Form Check</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="loginBtn">Login</button>
+                    <button class="btn btn-primary" id="signupBtn">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <div class="container">
+            <div class="page-title">
+                <h1>Transform Your Body, Transform Your Life</h1>
+                <p>Join millions of users achieving their fitness goals with our all-in-one fitness platform</p>
+            </div>
+
+            <div class="categories">
+                <div class="category-card" onclick="showPage('workouts')">
+                    <div class="category-img">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Workout Plans</h3>
+                        <p>Personalized plans for your goals</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="showPage('exercises')">
+                    <div class="category-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Exercise Library</h3>
+                        <p>1000+ exercises with instructions</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="showPage('nutrition')">
+                    <div class="category-img">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Nutrition Plans</h3>
+                        <p>Diet tailored to your needs</p>
+                    </div>
+                </div>
+                <div class="category-card" onclick="showPage('camera')">
+                    <div class="category-img">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Form Check</h3>
+                        <p>AI-powered technique analysis</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-title">
+                <h2>Featured Workouts</h2>
+            </div>
+
+            <div class="exercise-list">
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Chest Day - Beginner</h3>
+                        <p>Complete chest workout for beginners focusing on form and technique</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-clock"></i> 45 min</span>
+                            <span><i class="fas fa-dumbbell"></i> 8 exercises</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Leg Day - Advanced</h3>
+                        <p>Intensive leg workout for advanced lifters focusing on strength and hypertrophy</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-clock"></i> 60 min</span>
+                            <span><i class="fas fa-dumbbell"></i> 10 exercises</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Full Body HIIT</h3>
+                        <p>High-intensity interval training for fat loss and cardiovascular health</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-clock"></i> 30 min</span>
+                            <span><i class="fas fa-dumbbell"></i> 12 exercises</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workouts Page -->
+    <div id="workouts" class="page">
+        <div class="container">
+            <div class="page-title">
+                <h1>Workout Plans</h1>
+                <p>Choose from our expertly designed workout plans based on your goals and experience level</p>
+            </div>
+
+            <div class="categories">
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Weight Loss</h3>
+                        <p>Cardio and HIIT focused workouts</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Muscle Building</h3>
+                        <p>Hypertrophy focused training splits</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Strength Training</h3>
+                        <p>Focus on compound lifts and progressive overload</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Maintenance</h3>
+                        <p>Balanced workouts for overall fitness</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-title">
+                <h2>Training Splits</h2>
+            </div>
+
+            <div class="exercise-list">
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Beginner Full Body</h3>
+                        <p>3-day per week full body program focusing on fundamental movement patterns</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-calendar"></i> 3 days/week</span>
+                            <span><i class="fas fa-clock"></i> 8 weeks</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Intermediate Push/Pull/Legs</h3>
+                        <p>6-day per week split focusing on movement patterns and muscle groups</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-calendar"></i> 6 days/week</span>
+                            <span><i class="fas fa-clock"></i> 12 weeks</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Advanced Bodybuilding</h3>
+                        <p>6-day per week muscle group split for advanced hypertrophy training</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-calendar"></i> 6 days/week</span>
+                            <span><i class="fas fa-clock"></i> 16 weeks</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exercises Page -->
+    <div id="exercises" class="page">
+        <div class="container">
+            <div class="page-title">
+                <h1>Exercise Library</h1>
+                <p>Browse our complete exercise database with instructions, videos, and form tips</p>
+            </div>
+
+            <div class="categories">
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-hands"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Chest Exercises</h3>
+                        <p>25 exercises</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-walking"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Leg Exercises</h3>
+                        <p>32 exercises</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Back Exercises</h3>
+                        <p>28 exercises</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-hand-rock"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Shoulder Exercises</h3>
+                        <p>22 exercises</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-title">
+                <h2>Popular Exercises</h2>
+            </div>
+
+            <div class="exercise-list">
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Bench Press</h3>
+                        <p>Compound chest exercise targeting pectorals, shoulders, and triceps</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-dumbbell"></i> Chest</span>
+                            <span><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Barbell Squat</h3>
+                        <p>Compound lower body exercise targeting quads, glutes, and hamstrings</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-dumbbell"></i> Legs</span>
+                            <span><i class="fas fa-signal"></i> Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Deadlift</h3>
+                        <p>Compound full body exercise targeting posterior chain and grip strength</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-dumbbell"></i> Back</span>
+                            <span><i class="fas fa-signal"></i> Advanced</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nutrition Page -->
+    <div id="nutrition" class="page">
+        <div class="container">
+            <div class="page-title">
+                <h1>Nutrition Plans</h1>
+                <p>Fuel your body with our science-based nutrition plans tailored to your goals</p>
+            </div>
+
+            <div class="categories">
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Weight Loss</h3>
+                        <p>Calorie deficit plans</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Muscle Gain</h3>
+                        <p>Calorie surplus plans</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Maintenance</h3>
+                        <p>Balanced nutrition plans</p>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Vegetarian</h3>
+                        <p>Plant-based nutrition</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-title">
+                <h2>Sample Meal Plans</h2>
+            </div>
+
+            <div class="exercise-list">
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Weight Loss - 1800 Calories</h3>
+                        <p>Balanced meal plan with moderate protein and controlled carbohydrates for sustainable weight loss</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-utensils"></i> 4 meals</span>
+                            <span><i class="fas fa-apple-alt"></i> High protein</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Muscle Gain - 3000 Calories</h3>
+                        <p>High-calorie meal plan with emphasis on protein and complex carbohydrates for muscle growth</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-utensils"></i> 5 meals</span>
+                            <span><i class="fas fa-apple-alt"></i> High calorie</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Maintenance - 2200 Calories</h3>
+                        <p>Well-rounded meal plan with balanced macronutrients for maintaining weight and health</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-utensils"></i> 4 meals</span>
+                            <span><i class="fas fa-apple-alt"></i> Balanced</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera/Form Check Page -->
+    <div id="camera" class="page">
+        <div class="container">
+            <div class="page-title">
+                <h1>Form Check</h1>
+                <p>Use your camera to check your exercise form and get real-time feedback</p>
+            </div>
+
+            <div class="camera-section">
+                <div class="camera-container">
+                    <div class="camera-preview">
+                        <i class="fas fa-camera"></i>
+                        <div class="angle-indicator">Angle: 0°</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exercise-select">Select Exercise</label>
+                        <select id="exercise-select" class="form-control">
+                            <option value="squat">Barbell Squat</option>
+                            <option value="bench">Bench Press</option>
+                            <option value="deadlift">Deadlift</option>
+                            <option value="shoulder">Shoulder Press</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-gradient" style="margin-top: 20px;">
+                        <i class="fas fa-video"></i> Start Camera
+                    </button>
+                </div>
+            </div>
+
+            <div class="page-title">
+                <h2>Form Tips</h2>
+            </div>
+
+            <div class="exercise-list">
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Barbell Squat</h3>
+                        <p>Keep your chest up, back straight, and knees tracking over toes. Descend until thighs are parallel to the floor.</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-exclamation-circle"></i> Common mistake: Knee cave</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Bench Press</h3>
+                        <p>Maintain a slight arch in your back, keep shoulders retracted, and lower bar to mid-chest.</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-exclamation-circle"></i> Common mistake: Flaring elbows</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="exercise-content">
+                        <h3>Deadlift</h3>
+                        <p>Keep your back straight, chest up, and drive through your heels. Maintain the bar close to your body.</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-exclamation-circle"></i> Common mistake: Rounded back</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FitPro</h3>
+                    <p>Your all-in-one fitness solution for workout plans, nutrition guidance, and progress tracking.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a onclick="showPage('home')">Home</a></li>
+                        <li><a onclick="showPage('workouts')">Workouts</a></li>
+                        <li><a onclick="showPage('exercises')">Exercises</a></li>
+                        <li><a onclick="showPage('nutrition')">Nutrition</a></li>
+                        <li><a onclick="showPage('camera')">Form Check</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@fitpro.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fitness St, Health City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 FitPro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Login/Signup Buttons
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            alert('Login functionality would be implemented here with backend integration');
+        });
+
+        document.getElementById('signupBtn').addEventListener('click', () => {
+            alert('Signup functionality would be implemented here with backend integration');
+        });
+
+        // Simple animation on scroll
+        window.addEventListener('scroll', () => {
+            const elements = document.querySelectorAll('.category-card, .exercise-card');
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = 1;
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Initialize element styles for animation
+        document.querySelectorAll('.category-card, .exercise-card').forEach(element => {
+            element.style.opacity = 0;
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+
+        // Trigger scroll once to check initial position
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPro - Ultimate Fitness Solution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff6b6b;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gray: #7f8c8d;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #f5f7fa, #e4e7ec);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.5);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 10px rgba(106, 17, 203, 0.4);
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%236a11cb" opacity="0.1"/><path d="M0 0 L100 100" stroke="%236a11cb" stroke-width="1" opacity="0.2"/><path d="M100 0 L0 100" stroke="%236a11cb" stroke-width="1" opacity="0.2"/></svg>');
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--dark);
+        }
+
+        /* Calculator Section */
+        .calculator {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin: 40px auto;
+            max-width: 1000px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculator:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        .calculator h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary);
+            font-size: 2.2rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .calc-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calc-card:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .calc-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .calc-card i {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .calc-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .calc-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        /* Calculator Forms */
+        .calculator-form {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            margin: 40px auto;
+            max-width: 600px;
+            display: none;
+        }
+
+        .calculator-form h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+        }
+
+        .gender-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .gender-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .gender-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(106, 17, 203, 0.05);
+        }
+
+        .gender-option i {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: var(--gray);
+        }
+
+        .gender-option.selected i {
+            color: var(--primary);
+        }
+
+        .calc-result {
+            text-align: center;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Workout Plans Section */
+        .workout-plans {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .plan-card {
+            background: var(--light);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .plan-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .plan-header {
+            padding: 25px;
+            text-align: center;
+            color: white;
+        }
+
+        .weight-loss .plan-header {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+        }
+
+        .muscle-gain .plan-header {
+            background: linear-gradient(to right, #00c9ff, #92fe9d);
+        }
+
+        .maintenance .plan-header {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+        }
+
+        .plan-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .plan-header p {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .plan-header p span {
+            font-size: 1rem;
+            font-weight: normal;
+        }
+
+        .plan-content {
+            padding: 25px;
+        }
+
+        .plan-content ul {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .plan-content ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .plan-content ul li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+
+        /* Diet Plans Section */
+        .diet-plans {
+            padding: 80px 0;
+            background: linear-gradient(to bottom, #f5f7fa, #e4e7ec);
+        }
+
+        .diet-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .diet-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .diet-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .diet-img {
+            height: 200px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .diet-img i {
+            font-size: 4rem;
+            color: white;
+            z-index: 1;
+        }
+
+        .diet-img:after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+        }
+
+        .diet-content {
+            padding: 25px;
+        }
+
+        .diet-content h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .day-plan {
+            margin-top: 25px;
+        }
+
+        .day-plan h4 {
+            margin-bottom: 10px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .day-plan h4 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        /* Competitions Section */
+        .competitions {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .competition-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .competition-card {
+            background: var(--light);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .competition-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .competition-header {
+            padding: 20px;
+            text-align: center;
+            color: white;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        .competition-body {
+            padding: 25px;
+        }
+
+        .competition-body h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 5px;
+        }
+
+        .participants {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .participant {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-left: -15px;
+            background: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .participant:first-child {
+            margin-left: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+            color: #aaa;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin: 20px 0;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: 10px 15px;
+            }
+
+            .auth-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .calculator {
+                padding: 25px;
+            }
+
+            .gender-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>FitPro</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="workout.html">Workouts</a></li>
+                        <li><a href="#">Nutrition</a></li>
+                        <li><a href="#">Progress</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Competitions</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="loginBtn">Login</button>
+                    <button class="btn btn-primary" id="signupBtn">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Transform Your Body, Transform Your Life</h1>
+            <p>Join millions of users achieving their fitness goals with our all-in-one fitness platform. Personalized workouts, nutrition plans, and progress tracking - all in one place.</p>
+            <button class="btn btn-gradient"><i class="fas fa-arrow-right"></i>Get Started Today</button>
+        </div>
+    </section>
+
+    <!-- Fitness Calculator Section -->
+    <section class="calculator">
+        <h2>Fitness Calculators</h2>
+        <div class="calculator-grid">
+            <div class="calc-card">
+                <i class="fas fa-weight"></i>
+                <h3>BMI Calculator</h3>
+                <p>Calculate your Body Mass Index to understand your weight category</p>
+                <button class="btn btn-primary" id="bmiCalcBtn">Calculate BMI</button>
+            </div>
+            <div class="calc-card">
+                <i class="fas fa-heart"></i>
+                <h3>BMR Calculator</h3>
+                <p>Calculate your Basal Metabolic Rate to optimize your nutrition</p>
+                <button class="btn btn-primary" id="bmrCalcBtn">Calculate BMR</button>
+            </div>
+            <div class="calc-card">
+                <i class="fas fa-burn"></i>
+                <h3>Calorie Calculator</h3>
+                <p>Determine your daily calorie needs based on your goals</p>
+                <button class="btn btn-primary" id="calorieCalcBtn">Calculate Calories</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- BMI Calculator -->
+    <div class="calculator-form" id="bmiCalculator">
+        <h3>BMI Calculator</h3>
+        <div class="form-group">
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height" placeholder="Enter your height">
+        </div>
+        <div class="form-group">
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight" placeholder="Enter your weight">
+        </div>
+        <button class="btn btn-primary" id="calculateBmi">Calculate</button>
+        <div class="calc-result" id="bmiResult"></div>
+    </div>
+
+    <!-- BMR Calculator -->
+    <div class="calculator-form" id="bmrCalculator">
+        <h3>BMR Calculator</h3>
+        <div class="gender-group">
+            <div class="gender-option" id="maleOption">
+                <i class="fas fa-male"></i>
+                <p>Male</p>
+            </div>
+            <div class="gender-option" id="femaleOption">
+                <i class="fas fa-female"></i>
+                <p>Female</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" placeholder="Enter your age">
+        </div>
+        <div class="form-group">
+            <label for="bmrHeight">Height (cm)</label>
+            <input type="number" id="bmrHeight" placeholder="Enter your height">
+        </div>
+        <div class="form-group">
+            <label for="bmrWeight">Weight (kg)</label>
+            <input type="number" id="bmrWeight" placeholder="Enter your weight">
+        </div>
+        <button class="btn btn-primary" id="calculateBmr">Calculate</button>
+        <div class="calc-result" id="bmrResult"></div>
+    </div>
+
+    <!-- Calorie Calculator -->
+    <div class="calculator-form" id="calorieCalculator">
+        <h3>Calorie Calculator</h3>
+        <div class="form-group">
+            <label for="activityLevel">Activity Level</label>
+            <select id="activityLevel">
+                <option value="1.2">Sedentary (little or no exercise)</option>
+                <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
+                <option value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
+                <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
+                <option value="1.9">Extra active (very hard exercise, physical job)</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" id="calculateCalories">Calculate</button>
+        <div class="calc-result" id="calorieResult"></div>
+    </div>
+
+    <!-- Workout Plans Section -->
+    <section class="workout-plans">
+        <div class="container">
+            <div class="section-title">
+                <h2>Workout Plans</h2>
+                <p>Choose from our expertly designed workout plans based on your goals</p>
+            </div>
+            <div class="plans-container">
+                <div class="plan-card weight-loss">
+                    <div class="plan-header">
+                        <h3>Weight Loss</h3>
+                        <p>30 days <span>program</span></p>
+                    </div>
+                    <div class="plan-content">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i>Cardio workouts</li>
+                            <li><i class="fas fa-check-circle"></i>HIIT training</li>
+                            <li><i class="fas fa-check-circle"></i>Full-body exercises</li>
+                            <li><i class="fas fa-check-circle"></i>Low-impact options</li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%;">Select Plan</button>
+                    </div>
+                </div>
+                <div class="plan-card muscle-gain">
+                    <div class="plan-header">
+                        <h3>Muscle Gain</h3>
+                        <p>60 days <span>program</span></p>
+                    </div>
+                    <div class="plan-content">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i>Strength training</li>
+                            <li><i class="fas fa-check-circle"></i>Progressive overload</li>
+                            <li><i class="fas fa-check-circle"></i>Split routines</li>
+                            <li><i class="fas fa-check-circle"></i>Recovery guidance</li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%;">Select Plan</button>
+                    </div>
+                </div>
+                <div class="plan-card maintenance">
+                    <div class="plan-header">
+                        <h3>Maintenance</h3>
+                        <p>Ongoing <span>program</span></p>
+                    </div>
+                    <div class="plan-content">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i>Balanced workouts</li>
+                            <li><i class="fas fa-check-circle"></i>Flexible scheduling</li>
+                            <li><i class="fas fa-check-circle"></i>Varied exercises</li>
+                            <li><i class="fas fa-check-circle"></i>Lifestyle integration</li>
+                        </ul>
+                        <button class="btn btn-primary" style="width: 100%;">Select Plan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diet Plans Section -->
+    <section class="diet-plans">
+        <div class="container">
+            <div class="section-title">
+                <h2>Diet Plans</h2>
+                <p>Nutrition plans tailored to your fitness goals and dietary preferences</p>
+            </div>
+            <div class="diet-container">
+                <div class="diet-card">
+                    <div class="diet-img">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <div class="diet-content">
+                        <h3>Weight Loss Diet</h3>
+                        <p>Calorie-controlled meals with balanced nutrition to help you lose weight sustainably.</p>
+                        <div class="day-plan">
+                            <h4><i class="fas fa-utensils"></i>Sample Day</h4>
+                            <p><strong>Breakfast:</strong> Greek yogurt with berries</p>
+                            <p><strong>Lunch:</strong> Grilled chicken salad</p>
+                            <p><strong>Dinner:</strong> Baked salmon with vegetables</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="diet-card">
+                    <div class="diet-img">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="diet-content">
+                        <h3>Muscle Gain Diet</h3>
+                        <p>High-protein meal plan to support muscle growth and recovery.</p>
+                        <div class="day-plan">
+                            <h4><i class="fas fa-utensils"></i>Sample Day</h4>
+                            <p><strong>Breakfast:</strong> Protein oatmeal with nuts</p>
+                            <p><strong>Lunch:</strong> Lean beef with sweet potato</p>
+                            <p><strong>Dinner:</strong> Tuna steak with quinoa</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="diet-card">
+                    <div class="diet-img">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="diet-content">
+                        <h3>Maintenance Diet</h3>
+                        <p>Balanced nutrition plan to maintain your weight and overall health.</p>
+                        <div class="day-plan">
+                            <h4><i class="fas fa-utensils"></i>Sample Day</h4>
+                            <p><strong>Breakfast:</strong> Whole grain toast with avocado</p>
+                            <p><strong>Lunch:</strong> Chicken wrap with veggies</p>
+                            <p><strong>Dinner:</strong> Stir-fried tofu with brown rice</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competitions Section -->
+    <section class="competitions">
+        <div class="container">
+            <div class="section-title">
+                <h2>Fitness Competitions</h2>
+                <p>Join challenges and compete with other FitPro users</p>
+            </div>
+            <div class="competition-container">
+                <div class="competition-card">
+                    <div class="competition-header">
+                        <h3>30-Day Step Challenge</h3>
+                        <p>April 1 - April 30</p>
+                    </div>
+                    <div class="competition-body">
+                        <h3>Walk to Win!</h3>
+                        <p>Reach 10,000 steps daily to complete the challenge and earn rewards.</p>
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%;"></div>
+                            </div>
+                        </div>
+                        <div class="participants">
+                            <div class="participant">1</div>
+                            <div class="participant">2</div>
+                            <div class="participant">3</div>
+                            <div class="participant">+25</div>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Join Challenge</button>
+                    </div>
+                </div>
+                <div class="competition-card">
+                    <div class="competition-header">
+                        <h3>Summer Body Transformation</h3>
+                        <p>May 1 - July 31</p>
+                    </div>
+                    <div class="competition-body">
+                        <h3>Get Beach Ready!</h3>
+                        <p>12-week transformation challenge with weekly workouts and diet plans.</p>
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>28%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 28%;"></div>
+                            </div>
+                        </div>
+                        <div class="participants">
+                            <div class="participant">1</div>
+                            <div class="participant">2</div>
+                            <div class="participant">3</div>
+                            <div class="participant">+42</div>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Join Challenge</button>
+                    </div>
+                </div>
+                <div class="competition-card">
+                    <div class="competition-header">
+                        <h3>Plank Master Challenge</h3>
+                        <p>Ongoing</p>
+                    </div>
+                    <div class="competition-body">
+                        <h3>Build Core Strength!</h3>
+                        <p>Compete to see who can hold a plank the longest. Weekly leaderboards.</p>
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Progress</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 82%;"></div>
+                            </div>
+                        </div>
+                        <div class="participants">
+                            <div class="participant">1</div>
+                            <div class="participant">2</div>
+                            <div class="participant">3</div>
+                            <div class="participant">+38</div>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Join Challenge</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FitPro</h3>
+                    <p>Your all-in-one fitness solution for workout plans, nutrition guidance, and progress tracking.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Workouts</a></li>
+                        <li><a href="#">Nutrition</a></li>
+                        <li><a href="#">Progress</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@fitpro.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fitness St, Health City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 FitPro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const bmiCalcBtn = document.getElementById('bmiCalcBtn');
+        const bmrCalcBtn = document.getElementById('bmrCalcBtn');
+        const calorieCalcBtn = document.getElementById('calorieCalcBtn');
+        const bmiCalculator = document.getElementById('bmiCalculator');
+        const bmrCalculator = document.getElementById('bmrCalculator');
+        const calorieCalculator = document.getElementById('calorieCalculator');
+        const calculateBmi = document.getElementById('calculateBmi');
+        const calculateBmr = document.getElementById('calculateBmr');
+        const calculateCalories = document.getElementById('calculateCalories');
+        const bmiResult = document.getElementById('bmiResult');
+        const bmrResult = document.getElementById('bmrResult');
+        const calorieResult = document.getElementById('calorieResult');
+        const maleOption = document.getElementById('maleOption');
+        const femaleOption = document.getElementById('femaleOption');
+        
+        let selectedGender = 'male';
+        let bmrValue = 0;
+
+        // Show Login Modal (simplified for demo)
+        loginBtn.addEventListener('click', () => {
+            alert('Login functionality would be implemented here with backend integration');
+        });
+
+        // Show Signup Modal (simplified for demo)
+        signupBtn.addEventListener('click', () => {
+            alert('Signup functionality would be implemented here with backend integration');
+        });
+
+        // Show BMI Calculator
+        bmiCalcBtn.addEventListener('click', () => {
+            bmiCalculator.style.display = 'block';
+            bmrCalculator.style.display = 'none';
+            calorieCalculator.style.display = 'none';
+            bmiCalculator.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Show BMR Calculator
+        bmrCalcBtn.addEventListener('click', () => {
+            bmrCalculator.style.display = 'block';
+            bmiCalculator.style.display = 'none';
+            calorieCalculator.style.display = 'none';
+            bmrCalculator.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Show Calorie Calculator
+        calorieCalcBtn.addEventListener('click', () => {
+            if (bmrValue === 0) {
+                alert('Please calculate your BMR first for accurate calorie estimation');
+                bmrCalcBtn.click();
+                return;
+            }
+            calorieCalculator.style.display = 'block';
+            bmiCalculator.style.display = 'none';
+            bmrCalculator.style.display = 'none';
+            calorieCalculator.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Gender Selection
+        maleOption.addEventListener('click', () => {
+            selectedGender = 'male';
+            maleOption.classList.add('selected');
+            femaleOption.classList.remove('selected');
+        });
+
+        femaleOption.addEventListener('click', () => {
+            selectedGender = 'female';
+            femaleOption.classList.add('selected');
+            maleOption.classList.remove('selected');
+        });
+
+        // Initialize gender selection
+        maleOption.classList.add('selected');
+
+        // Calculate BMI
+        calculateBmi.addEventListener('click', () => {
+            const height = parseFloat(document.getElementById('height').value) / 100; // convert cm to m
+            const weight = parseFloat(document.getElementById('weight').value);
+            
+            if (height && weight) {
+                const bmi = weight / (height * height);
+                let category = '';
+                
+                if (bmi < 18.5) {
+                    category = 'Underweight';
+                    bmiResult.style.background = 'linear-gradient(to right, #ff7e5f, #feb47b)';
+                } else if (bmi < 25) {
+                    category = 'Normal weight';
+                    bmiResult.style.background = 'linear-gradient(to right, #00c9ff, #92fe9d)';
+                } else if (bmi < 30) {
+                    category = 'Overweight';
+                    bmiResult.style.background = 'linear-gradient(to right, #ff7e5f, #feb47b)';
+                } else {
+                    category = 'Obesity';
+                    bmiResult.style.background = 'linear-gradient(to right, #ff6b6b, #ff5252)';
+                }
+                
+                bmiResult.innerHTML = `Your BMI: ${bmi.toFixed(1)} (${category})`;
+                bmiResult.style.display = 'block';
+            } else {
+                alert('Please enter both height and weight.');
+            }
+        });
+
+        // Calculate BMR
+        calculateBmr.addEventListener('click', () => {
+            const age = parseFloat(document.getElementById('age').value);
+            const height = parseFloat(document.getElementById('bmrHeight').value);
+            const weight = parseFloat(document.getElementById('bmrWeight').value);
+            
+            if (age && height && weight) {
+                // Mifflin-St Jeor Equation
+                if (selectedGender === 'male') {
+                    bmrValue = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+                } else {
+                    bmrValue = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+                }
+                
+                bmrResult.innerHTML = `Your BMR: ${bmrValue.toFixed(0)} calories/day`;
+                bmrResult.style.background = 'linear-gradient(to right, #6a11cb, #2575fc)';
+                bmrResult.style.display = 'block';
+            } else {
+                alert('Please enter all required fields.');
+            }
+        });
+
+        // Calculate Calories
+        calculateCalories.addEventListener('click', () => {
+            const activityLevel = parseFloat(document.getElementById('activityLevel').value);
+            
+            if (bmrValue > 0) {
+                const maintenanceCalories = bmrValue * activityLevel;
+                
+                calorieResult.innerHTML = `
+                    Daily Calorie Needs:<br>
+                    Maintenance: ${maintenanceCalories.toFixed(0)} calories<br>
+                    Mild weight loss: ${(maintenanceCalories - 250).toFixed(0)} calories<br>
+                    Weight loss: ${(maintenanceCalories - 500).toFixed(0)} calories<br>
+                    Weight gain: ${(maintenanceCalories + 500).toFixed(0)} calories
+                `;
+                calorieResult.style.background = 'linear-gradient(to right, #6a11cb, #2575fc)';
+                calorieResult.style.display = 'block';
+            } else {
+                alert('Please calculate your BMR first.');
+            }
+        });
+
+        // Simple animation on scroll
+        window.addEventListener('scroll', () => {
+            const elements = document.querySelectorAll('.plan-card, .diet-card, .competition-card');
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = 1;
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Initialize element styles for animation
+        document.querySelectorAll('.plan-card, .diet-card, .competition-card').forEach(element => {
+            element.style.opacity = 0;
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+
+        // Trigger scroll once to check initial position
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>
