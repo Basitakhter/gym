@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Fee Payment Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-bottom: 50px;
+        }
+        
+        .navbar {
+            background-color: var(--primary);
+        }
+        
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+        
+        .card-header {
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary);
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            border: none;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning);
+            border: none;
+        }
+        
+        .btn-danger {
+            background-color: var(--accent);
+            border: none;
+        }
+        
+        .sidebar {
+            background-color: var(--primary);
+            color: white;
+            border-radius: 10px;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 12px 20px;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .sidebar a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left: 4px solid var(--secondary);
+            font-weight: bold;
+        }
+        
+        .dashboard-stat {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .stat-1 {
+            background: linear-gradient(45deg, #3498db, #2c3e50);
+        }
+        
+        .stat-2 {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+        
+        .stat-3 {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+        }
+        
+        .receipt {
+            background-color: white;
+            border: 2px dashed #ccc;
+            padding: 25px;
+            max-width: 500px;
+            margin: 0 auto;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .welcome-header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 30px;
+            text-align: center;
+            border-radius: 10px;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .member-table th, .member-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .member-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: var(--success);
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+        }
+        
+        .notification.error {
+            background: var(--accent);
+        }
+        
+        .print-only {
+            display: none;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .receipt, .receipt * {
+                visibility: visible;
+            }
+            .receipt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+            }
+            .no-print {
+                display: none;
+            }
+            .print-only {
+                display: block;
+                text-align: center;
+                margin-top: 20px;
+                font-style: italic;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand logo" href="#">
+                <i class="fas fa-users me-2"></i>Membership Portal
+            </a>
+            <div class="d-flex">
+                <span class="navbar-text me-3" id="userInfo"></span>
+                <button class="btn btn-outline-light" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" id="mainContainer">
+        <!-- Login Section -->
+        <div class="section active" id="loginSection">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="login-container">
+                        <h2 class="text-center mb-4">Login to Portal</h2>
+                        <ul class="nav nav-tabs" id="loginTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="admin-tab" data-bs-toggle="tab" data-bs-target="#adminLogin" type="button" role="tab">Admin Login</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="member-tab" data-bs-toggle="tab" data-bs-target="#memberLogin" type="button" role="tab">Member Login</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content p-3" id="loginTabContent">
+                            <div class="tab-pane fade show active" id="adminLogin" role="tabpanel">
+                                <div class="mb-3">
+                                    <label class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="adminUsername" value="admin">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="adminPassword" value="password">
+                                </div>
+                                <button type="button" class="btn btn-primary w-100" id="adminLoginBtn">Login as Admin</button>
+                            </div>
+                            <div class="tab-pane fade" id="memberLogin" role="tabpanel">
+                                <div class="mb-3">
+                                    <label class="form-label">Registration Number</label>
+                                    <input type="text" class="form-control" id="memberRegNumber">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="memberPassword">
+                                </div>
+                                <button type="button" class="btn btn-primary w-100" id="memberLoginBtn">Login as Member</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div class="section" id="adminDashboard">
+            <div class="welcome-header mb-4">
+                <h1>Admin Dashboard</h1>
+                <p class="lead">Manage members, payments, and organization settings</p>
+            </div>
+
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3 no-print">
+                    <div class="sidebar">
+                        <a href="#" class="active" data-section="dashboard"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+                        <a href="#" data-section="register"><i class="fas fa-user-plus me-2"></i> Register Member</a>
+                        <a href="#" data-section="payment"><i class="fas fa-credit-card me-2"></i> Record Payment</a>
+                        <a href="#" data-section="receipt"><i class="fas fa-receipt me-2"></i> Generate Receipt</a>
+                        <a href="#" data-section="statement"><i class="fas fa-file-invoice me-2"></i> View Statements</a>
+                        <a href="#" data-section="search"><i class="fas fa-search me-2"></i> Search Members</a>
+                        <a href="#" data-section="members"><i class="fas fa-list me-2"></i> All Members</a>
+                        <a href="#" data-section="settings"><i class="fas fa-cog me-2"></i> Settings</a>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="col-md-9">
+                    <!-- Dashboard Section -->
+                    <div class="section active" id="dashboard">
+                        <h2 class="mb-4">Admin Dashboard</h2>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="dashboard-stat stat-1">
+                                    <i class="fas fa-users fa-3x"></i>
+                                    <h3 id="totalMembers">0</h3>
+                                    <p>Total Members</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="dashboard-stat stat-2">
+                                    <i class="fas fa-money-bill-wave fa-3x"></i>
+                                    <h3 id="monthlyRevenue">$0</h3>
+                                    <p>Monthly Revenue</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="dashboard-stat stat-3">
+                                    <i class="fas fa-file-invoice-dollar fa-3x"></i>
+                                    <h3 id="paymentCompliance">0%</h3>
+                                    <p>Payment Compliance</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                Recent Payments
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Receipt No.</th>
+                                                <th>Name</th>
+                                                <th>Amount</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recentPaymentsTable">
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                Recent Registrations
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Reg. Number</th>
+                                                <th>Name</th>
+                                                <th>Join Date</th>
+                                                <th>Level</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="recentRegistrationsTable">
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Registration Section -->
+                    <div class="section" id="register">
+                        <h2 class="mb-4">Register New Member</h2>
+                        <div class="form-container">
+                            <form id="registrationForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Full Name *</label>
+                                            <input type="text" class="form-control" id="fullName" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Father's Name *</label>
+                                            <input type="text" class="form-control" id="fatherName" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Registration Number *</label>
+                                            <input type="text" class="form-control" id="regNumber" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">City *</label>
+                                            <input type="text" class="form-control" id="city" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Town/Area *</label>
+                                            <input type="text" class="form-control" id="town" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Level *</label>
+                                            <select class="form-select" id="level" required>
+                                                <option value="">Select Level</option>
+                                                <option>Basic</option>
+                                                <option>Standard</option>
+                                                <option>Premium</option>
+                                                <option>Gold</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Monthly Fee ($) *</label>
+                                            <input type="number" class="form-control" id="monthlyFee" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Password *</label>
+                                            <input type="password" class="form-control" id="password" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Register Member</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Section -->
+                    <div class="section" id="payment">
+                        <h2 class="mb-4">Record Payment</h2>
+                        <div class="form-container">
+                            <form id="paymentForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Registration Number *</label>
+                                            <input type="text" class="form-control" id="payRegNumber" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Member Name</label>
+                                            <input type="text" class="form-control" id="payMemberName" disabled>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Monthly Fee</label>
+                                            <input type="text" class="form-control" id="payMonthlyFee" disabled>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Last Month Dues</label>
+                                            <input type="text" class="form-control" id="payLastDues" value="$0" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Payment Month *</label>
+                                            <select class="form-select" id="payMonth" required>
+                                                <option value="">Select Month</option>
+                                                <option>January</option>
+                                                <option>February</option>
+                                                <option>March</option>
+                                                <option>April</option>
+                                                <option>May</option>
+                                                <option>June</option>
+                                                <option>July</option>
+                                                <option>August</option>
+                                                <option>September</option>
+                                                <option>October</option>
+                                                <option>November</option>
+                                                <option>December</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Adjustment ($)</label>
+                                            <input type="number" class="form-control" id="payAdjustment" value="0">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Bank Receipt Serial Number *</label>
+                                            <input type="text" class="form-control" id="payBankReceipt" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Total Amount</label>
+                                            <input type="text" class="form-control" id="payTotalAmount" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Process Payment</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Receipt Section -->
+                    <div class="section" id="receipt">
+                        <h2 class="mb-4">Generate Receipt</h2>
+                        <div class="form-container mb-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Registration Number</label>
+                                        <input type="text" class="form-control" id="receiptRegNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Receipt Number</label>
+                                        <input type="text" class="form-control" id="receiptNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary" id="generateReceiptBtn">Generate Receipt</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                Payment Receipt
+                            </div>
+                            <div class="card-body">
+                                <div class="receipt" id="receiptPrint">
+                                    <div class="text-center mb-4">
+                                        <h2>ORGANIZATION NAME</h2>
+                                        <p>123 Organization Street, City</p>
+                                        <p>Phone: (123) 456-7890 | Email: info@organization.com</p>
+                                        <hr>
+                                        <h3>PAYMENT RECEIPT</h3>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <strong>Receipt No:</strong> <span id="receiptNo">RCPT-0000</span>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <strong>Date:</strong> <span id="receiptDate">Oct 15, 2023</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>Received from:</strong> <span id="receiptName">John Smith</span>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>Father's Name:</strong> <span id="receiptFather">Robert Smith</span>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <strong>Registration No:</strong> <span id="receiptRegNo">MEM-2023-001</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <strong>City/Area:</strong> <span id="receiptCity">New York / Manhattan</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>For:</strong> <span id="receiptFor">Monthly Membership Fee (October 2023)</span>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>Amount:</strong> <span id="receiptAmount">$50.00</span>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>Payment Method:</strong> <span id="receiptMethod">Bank Transfer</span>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <strong>Bank Receipt No:</strong> <span id="receiptBankNo">BRN-567890</span>
+                                    </div>
+                                    
+                                    <hr>
+                                    
+                                    <div class="text-center">
+                                        <p>Thank you for your payment!</p>
+                                        <p id="receiptGenerated">Generated on: Oct 15, 2023 14:25:36</p>
+                                    </div>
+                                    
+                                    <div class="print-only">
+                                        This is a computer generated receipt and does not require a signature.
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center mt-4 no-print">
+                                    <button class="btn btn-primary me-2" id="printReceiptBtn"><i class="fas fa-print me-1"></i> Print Receipt</button>
+                                    <button class="btn btn-success" id="emailReceiptBtn"><i class="fas fa-envelope me-1"></i> Email Receipt</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Statement Section -->
+                    <div class="section" id="statement">
+                        <h2 class="mb-4">View Statements</h2>
+                        <div class="form-container">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Registration Number</label>
+                                        <input type="text" class="form-control" id="statementRegNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Statement Period</label>
+                                        <select class="form-select" id="statementPeriod">
+                                            <option value="3">Last 3 Months</option>
+                                            <option value="6">Last 6 Months</option>
+                                            <option value="12">Last 12 Months</option>
+                                            <option value="all">All Time</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary" id="viewStatementBtn">View Statement</button>
+                                </div>
+                            </div>
+                            
+                            <div id="statementResults" style="display: none;">
+                                <h4 class="mt-4">Statement for <span id="statementName">John Smith</span> (REG: <span id="statementReg">MEM-2023-001</span>)</h4>
+                                <p>Period: <span id="statementPeriodText">January 2023 - October 2023</span></p>
+                                
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="statementTable">
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Section -->
+                    <div class="section" id="search">
+                        <h2 class="mb-4">Search Members</h2>
+                        <div class="form-container">
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Registration Number</label>
+                                        <input type="text" class="form-control" id="searchRegNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="searchName">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">City/Area</label>
+                                        <input type="text" class="form-control" id="searchCity">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary" id="searchBtn">Search</button>
+                                </div>
+                            </div>
+                            
+                            <div id="searchResults" style="display: none;">
+                                <h4 class="mt-4">Search Results</h4>
+                                
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Reg. Number</th>
+                                                <th>Name</th>
+                                                <th>Father's Name</th>
+                                                <th>City/Area</th>
+                                                <th>Level</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="searchResultsTable">
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- All Members Section -->
+                    <div class="section" id="members">
+                        <h2 class="mb-4">All Members</h2>
+                        <div class="form-container">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Reg. Number</th>
+                                            <th>Name</th>
+                                            <th>Father's Name</th>
+                                            <th>City/Area</th>
+                                            <th>Level</th>
+                                            <th>Monthly Fee</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="allMembersTable">
+                                        <!-- Will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Section -->
+                    <div class="section" id="settings">
+                        <h2 class="mb-4">System Settings</h2>
+                        <div class="form-container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">Organization Information</div>
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label class="form-label">Organization Name</label>
+                                                <input type="text" class="form-control" id="orgName" value="Organization Name">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Address</label>
+                                                <textarea class="form-control" id="orgAddress">123 Organization Street, City</textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Contact Information</label>
+                                                <input type="text" class="form-control" id="orgContact" value="Phone: (123) 456-7890 | Email: info@organization.com">
+                                            </div>
+                                            <button class="btn btn-primary">Save Settings</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">System Management</div>
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label class="form-label">Export Data</label>
+                                                <select class="form-select" id="exportType">
+                                                    <option>All Members</option>
+                                                    <option>Payment Records</option>
+                                                    <option>Member Statements</option>
+                                                </select>
+                                            </div>
+                                            <button class="btn btn-success mb-3"><i class="fas fa-download me-2"></i> Export Data</button>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">System Backup</label>
+                                                <div class="d-grid gap-2">
+                                                    <button class="btn btn-warning"><i class="fas fa-database me-2"></i> Create Backup</button>
+                                                    <button class="btn btn-info"><i class="fas fa-upload me-2"></i> Restore Backup</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <p>© 2023 Organization Membership Portal. All rights reserved.</p>
+        <p>Contact: support@organization.com | Phone: (123) 456-7890</p>
+    </footer>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle me-2"></i>
+        <span id="notificationText">Operation completed successfully!</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Data storage
+        let members = JSON.parse(localStorage.getItem('members')) || [];
+        let payments = JSON.parse(localStorage.getItem('payments')) || [];
+        let currentReceiptId = parseInt(localStorage.getItem('currentReceiptId')) || 1000;
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        
+        // Initialize with sample data if empty
+        if (members.length === 0) {
+            members = [
+                {
+                    id: 1,
+                    regNumber: 'MEM-2023-001',
+                    name: 'John Smith',
+                    fatherName: 'Robert Smith',
+                    city: 'New York',
+                    town: 'Manhattan',
+                    level: 'Premium',
+                    monthlyFee: 50,
+                    password: 'password123',
+                    joinDate: '2023-01-15',
+                    status: 'Active',
+                    balance: 0
+                },
+                {
+                    id: 2,
+                    regNumber: 'MEM-2023-008',
+                    name: 'Sarah Johnson',
+                    fatherName: 'Michael Johnson',
+                    city: 'Boston',
+                    town: 'Downtown',
+                    level: 'Gold',
+                    monthlyFee: 75,
+                    password: 'password123',
+                    joinDate: '2023-02-20',
+                    status: 'Active',
+                    balance: 0
+                }
+            ];
+            localStorage.setItem('members', JSON.stringify(members));
+        }
+        
+        if (payments.length === 0) {
+            payments = [
+                {
+                    id: 1,
+                    regNumber: 'MEM-2023-001',
+                    amount: 50,
+                    month: 'October',
+                    year: 2023,
+                    date: '2023-10-15',
+                    bankReceipt: 'BRN-567890',
+                    adjustment: 0,
+                    receiptId: 'RCPT-0987'
+                },
+                {
+                    id: 2,
+                    regNumber: 'MEM-2023-008',
+                    amount: 75,
+                    month: 'October',
+                    year: 2023,
+                    date: '2023-10-14',
+                    bankReceipt: 'BRN-567891',
+                    adjustment: 0,
+                    receiptId: 'RCPT-0986'
+                }
+            ];
+            localStorage.setItem('payments', JSON.stringify(payments));
+        }
+        
+        // Check if user is already logged in
+        if (currentUser) {
+            showDashboard();
+        }
+        
+        // DOM elements
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const memberLoginBtn = document.getElementById('memberLoginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        const userInfo = document.getElementById('userInfo');
+        
+        // Event listeners
+        adminLoginBtn.addEventListener('click', () => {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            if (username === 'admin' && password === 'password') {
+                currentUser = {
+                    type: 'admin',
+                    name: 'Administrator'
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showNotification('Admin login successful!');
+                showDashboard();
+            } else {
+                showNotification('Invalid admin credentials!', 'error');
+            }
+        });
+        
+        memberLoginBtn.addEventListener('click', () => {
+            const regNumber = document.getElementById('memberRegNumber').value;
+            const password = document.getElementById('memberPassword').value;
+            
+            const member = members.find(m => m.regNumber === regNumber && m.password === password);
+            
+            if (member) {
+                currentUser = {
+                    type: 'member',
+                    id: member.id,
+                    regNumber: member.regNumber,
+                    name: member.name
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showNotification(`Welcome back, ${member.name}!`);
+                showDashboard();
+            } else {
+                showNotification('Invalid member credentials!', 'error');
+            }
+        });
+        
+        logoutBtn.addEventListener('click', () => {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            showNotification('You have been logged out successfully!');
+            showLogin();
+        });
+        
+        // Navigation
+        function setupNavigation() {
+            document.querySelectorAll('.sidebar a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links in the same sidebar
+                    const sidebar = this.closest('.sidebar');
+                    sidebar.querySelectorAll('a').forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Hide all sections in the same container
+                    const container = this.closest('.col-md-9');
+                    container.querySelectorAll('.section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Show the target section
+                    const targetSection = this.getAttribute('data-section');
+                    container.querySelector('#' + targetSection).classList.add('active');
+                });
+            });
+        }
+        
+        // Registration form
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newMember = {
+                id: members.length > 0 ? Math.max(...members.map(m => m.id)) + 1 : 1,
+                regNumber: document.getElementById('regNumber').value,
+                name: document.getElementById('fullName').value,
+                fatherName: document.getElementById('fatherName').value,
+                city: document.getElementById('city').value,
+                town: document.getElementById('town').value,
+                level: document.getElementById('level').value,
+                monthlyFee: parseFloat(document.getElementById('monthlyFee').value),
+                password: document.getElementById('password').value,
+                joinDate: new Date().toISOString().split('T')[0],
+                status: 'Active',
+                balance: 0
+            };
+            
+            members.push(newMember);
+            localStorage.setItem('members', JSON.stringify(members));
+            
+            showNotification(`Member ${newMember.name} registered successfully!`);
+            this.reset();
+            updateDashboard();
+        });
+        
+        // Payment form
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const regNumber = document.getElementById('payRegNumber').value;
+            const member = members.find(m => m.regNumber === regNumber);
+            
+            if (!member) {
+                showNotification('Member not found!', 'error');
+                return;
+            }
+            
+            const newPayment = {
+                id: payments.length > 0 ? Math.max(...payments.map(p => p.id)) + 1 : 1,
+                regNumber: regNumber,
+                amount: member.monthlyFee + parseFloat(document.getElementById('payAdjustment').value),
+                month: document.getElementById('payMonth').value,
+                year: new Date().getFullYear(),
+                date: new Date().toISOString().split('T')[0],
+                bankReceipt: document.getElementById('payBankReceipt').value,
+                adjustment: parseFloat(document.getElementById('payAdjustment').value),
+                receiptId: `RCPT-${currentReceiptId}`
+            };
+            
+            payments.push(newPayment);
+            localStorage.setItem('payments', JSON.stringify(payments));
+            
+            // Update member balance
+            member.balance -= newPayment.amount;
+            localStorage.setItem('members', JSON.stringify(members));
+            
+            currentReceiptId++;
+            localStorage.setItem('currentReceiptId', currentReceiptId);
+            
+            showNotification(`Payment processed successfully! Receipt: ${newPayment.receiptId}`);
+            this.reset();
+            updateDashboard();
+        });
+        
+        // Generate receipt
+        document.getElementById('generateReceiptBtn').addEventListener('click', function() {
+            const regNumber = document.getElementById('receiptRegNumber').value;
+            const receiptNum = document.getElementById('receiptNumber').value;
+            
+            let payment;
+            
+            if (receiptNum) {
+                payment = payments.find(p => p.receiptId === receiptNum);
+                if (!payment) {
+                    showNotification('Receipt not found!', 'error');
+                    return;
+                }
+            } else if (regNumber) {
+                const memberPayments = payments.filter(p => p.regNumber === regNumber);
+                if (memberPayments.length === 0) {
+                    showNotification('No payments found for this member!', 'error');
+                    return;
+                }
+                // Get the most recent payment
+                payment = memberPayments[memberPayments.length - 1];
+            } else {
+                showNotification('Please enter a registration number or receipt number!', 'error');
+                return;
+            }
+            
+            const member = members.find(m => m.regNumber === payment.regNumber);
+            
+            if (member) {
+                document.getElementById('receiptNo').textContent = payment.receiptId;
+                document.getElementById('receiptDate').textContent = new Date(payment.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                document.getElementById('receiptName').textContent = member.name;
+                document.getElementById('receiptFather').textContent = member.fatherName;
+                document.getElementById('receiptRegNo').textContent = member.regNumber;
+                document.getElementById('receiptCity').textContent = `${member.city} / ${member.town}`;
+                document.getElementById('receiptFor').textContent = `Monthly Membership Fee (${payment.month} ${payment.year})`;
+                document.getElementById('receiptAmount').textContent = `$${payment.amount.toFixed(2)}`;
+                document.getElementById('receiptMethod').textContent = 'Bank Transfer';
+                document.getElementById('receiptBankNo').textContent = payment.bankReceipt;
+                document.getElementById('receiptGenerated').textContent = `Generated on: ${new Date().toLocaleString()}`;
+                
+                showNotification('Receipt generated successfully!');
+            }
+        });
+        
+        // Print receipt
+        document.getElementById('printReceiptBtn').addEventListener('click', function() {
+            window.print();
+        });
+        
+        // View statement
+        document.getElementById('viewStatementBtn').addEventListener('click', function() {
+            const regNumber = document.getElementById('statementRegNumber').value;
+            const period = document.getElementById('statementPeriod').value;
+            
+            const member = members.find(m => m.regNumber === regNumber);
+            
+            if (!member) {
+                showNotification('Member not found!', 'error');
+                return;
+            }
+            
+            const memberPayments = payments.filter(p => p.regNumber === regNumber);
+            
+            if (memberPayments.length === 0) {
+                showNotification('No payments found for this member!', 'error');
+                return;
+            }
+            
+            document.getElementById('statementName').textContent = member.name;
+            document.getElementById('statementReg').textContent = member.regNumber;
+            
+            const now = new Date();
+            let periodText = '';
+            
+            if (period === 'all') {
+                periodText = 'All payments';
+            } else {
+                const months = parseInt(period);
+                const startDate = new Date(now.getFullYear(), now.getMonth() - months, now.getDate());
+                periodText = `From ${startDate.toLocaleDateString()} to ${now.toLocaleDateString()}`;
+            }
+            
+            document.getElementById('statementPeriodText').textContent = periodText;
+            
+            const statementTable = document.getElementById('statementTable');
+            statementTable.innerHTML = '';
+            
+            memberPayments.forEach(payment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(payment.date).toLocaleDateString()}</td>
+                    <td>Monthly Fee - ${payment.month} ${payment.year}</td>
+                    <td>$${payment.amount.toFixed(2)}</td>
+                    <td><span class="badge bg-success">Paid</span></td>
+                `;
+                statementTable.appendChild(row);
+            });
+            
+            document.getElementById('statementResults').style.display = 'block';
+            showNotification('Statement generated successfully!');
+        });
+        
+        // Search members
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const regNumber = document.getElementById('searchRegNumber').value;
+            const name = document.getElementById('searchName').value;
+            const city = document.getElementById('searchCity').value;
+            
+            let results = members;
+            
+            if (regNumber) {
+                results = results.filter(m => m.regNumber.includes(regNumber));
+            }
+            
+            if (name) {
+                results = results.filter(m => m.name.toLowerCase().includes(name.toLowerCase()));
+            }
+            
+            if (city) {
+                results = results.filter(m => m.city.toLowerCase().includes(city.toLowerCase()) || 
+                                            m.town.toLowerCase().includes(city.toLowerCase()));
+            }
+            
+            const resultsTable = document.getElementById('searchResultsTable');
+            resultsTable.innerHTML = '';
+            
+            if (results.length === 0) {
+                resultsTable.innerHTML = '<tr><td colspan="7" class="text-center">No members found</td></tr>';
+            } else {
+                results.forEach(member => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${member.regNumber}</td>
+                        <td>${member.name}</td>
+                        <td>${member.fatherName}</td>
+                        <td>${member.city} / ${member.town}</td>
+                        <td>${member.level}</td>
+                        <td><span class="badge bg-success">${member.status}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-info">View</button>
+                        </td>
+                    `;
+                    resultsTable.appendChild(row);
+                });
+            }
+            
+            document.getElementById('searchResults').style.display = 'block';
+            showNotification(`Found ${results.length} members`);
+        });
+        
+        // Helper functions
+        function showNotification(message, type = 'success') {
+            notificationText.textContent = message;
+            
+            if (type === 'error') {
+                notification.classList.add('error');
+            } else {
+                notification.classList.remove('error');
+            }
+            
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+        
+        function showLogin() {
+            document.getElementById('loginSection').classList.add('active');
+            document.getElementById('adminDashboard').classList.remove('active');
+            document.getElementById('mainNavbar').style.display = 'none';
+        }
+        
+        function showDashboard() {
+            document.getElementById('loginSection').classList.remove('active');
+            document.getElementById('adminDashboard').classList.add('active');
+            document.getElementById('mainNavbar').style.display = 'flex';
+            
+            if (currentUser.type === 'admin') {
+                userInfo.textContent = `Admin: ${currentUser.name}`;
+                updateDashboard();
+                setupNavigation();
+            }
+        }
+        
+        function updateDashboard() {
+            document.getElementById('totalMembers').textContent = members.length;
+            
+            const currentMonth = new Date().toLocaleString('default', { month: 'long' });
+            const currentYear = new Date().getFullYear();
+            const currentMonthPayments = payments.filter(p => p.month === currentMonth && p.year === currentYear);
+            const monthlyRevenue = currentMonthPayments.reduce((sum, payment) => sum + payment.amount, 0);
+            
+            document.getElementById('monthlyRevenue').textContent = `$${monthlyRevenue.toFixed(2)}`;
+            
+            const complianceRate = members.length > 0 ? Math.round((currentMonthPayments.length / members.length) * 100) : 0;
+            document.getElementById('paymentCompliance').textContent = `${complianceRate}%`;
+            
+            const recentPaymentsTable = document.getElementById('recentPaymentsTable');
+            recentPaymentsTable.innerHTML = '';
+            
+            // Show last 5 payments
+            const recentPayments = payments.slice(-5).reverse();
+            
+            recentPayments.forEach(payment => {
+                const member = members.find(m => m.regNumber === payment.regNumber);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${payment.receiptId}</td>
+                    <td>${member ? member.name : 'Unknown'}</td>
+                    <td>$${payment.amount.toFixed(2)}</td>
+                    <td>${new Date(payment.date).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info">View</button>
+                    </td>
+                `;
+                recentPaymentsTable.appendChild(row);
+            });
+            
+            const recentRegistrationsTable = document.getElementById('recentRegistrationsTable');
+            recentRegistrationsTable.innerHTML = '';
+            
+            // Show last 5 registrations
+            const recentMembers = members.slice(-5).reverse();
+            
+            recentMembers.forEach(member => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${member.regNumber}</td>
+                    <td>${member.name}</td>
+                    <td>${new Date(member.joinDate).toLocaleDateString()}</td>
+                    <td>${member.level}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info">View</button>
+                    </td>
+                `;
+                recentRegistrationsTable.appendChild(row);
+            });
+            
+            // Update all members table
+            const allMembersTable = document.getElementById('allMembersTable');
+            allMembersTable.innerHTML = '';
+            
+            members.forEach(member => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${member.regNumber}</td>
+                    <td>${member.name}</td>
+                    <td>${member.fatherName}</td>
+                    <td>${member.city} / ${member.town}</td>
+                    <td>${member.level}</td>
+                    <td>$${member.monthlyFee.toFixed(2)}</td>
+                    <td><span class="badge bg-success">${member.status}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-info me-1">View</button>
+                        <button class="btn btn-sm btn-warning me-1">Edit</button>
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </td>
+                `;
+                allMembersTable.appendChild(row);
+            });
+        }
+        
+        // Auto-fill member details in payment form
+        document.getElementById('payRegNumber').addEventListener('blur', function() {
+            const regNumber = this.value;
+            const member = members.find(m => m.regNumber === regNumber);
+            
+            if (member) {
+                document.getElementById('payMemberName').value = member.name;
+                document.getElementById('payMonthlyFee').value = `$${member.monthlyFee.toFixed(2)}`;
+                document.getElementById('payTotalAmount').value = `$${member.monthlyFee.toFixed(2)}`;
+            } else {
+                document.getElementById('payMemberName').value = '';
+                document.getElementById('payMonthlyFee').value = '';
+                document.getElementById('payTotalAmount').value = '';
+            }
+        });
+        
+        // Update total amount when adjustment changes
+        document.getElementById('payAdjustment').addEventListener('input', function() {
+            const regNumber = document.getElementById('payRegNumber').value;
+            const member = members.find(m => m.regNumber === regNumber);
+            const adjustment = parseFloat(this.value) || 0;
+            
+            if (member) {
+                const total = member.monthlyFee + adjustment;
+                document.getElementById('payTotalAmount').value = `$${total.toFixed(2)}`;
+            }
+        });
+    </script>
+</body>
+</html>
